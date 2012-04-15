@@ -53,4 +53,14 @@ class UnixUser
     @shell = options[:shell]
   end
 
+  def locked?
+    m = /^.*?\s(.)/.match(status)
+    m[1] == 'L'
+  end
+
+  private
+  def status
+    `passwd -S #{@username}`
+  end
+
 end
